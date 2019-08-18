@@ -5,29 +5,29 @@ typedef struct node {
     struct node* next;
 } node;
 
-node* createLL(int c);
-node* createNullNode(int c);
-void printLL(node* head);
-node* addToLL(node* head, int c);
-int popFromLL(node** head);
-int removeFromLL(node* head);
-void reverseLL(node** head);
+//node* blank_list();
+node* create_node(int c);
+void print_list(node* head);
+node* add_to_list(node** head, int c);
+int pop_from_list(node** head);
+int remove_from_list(node* head);
+void reverse_list(node** head);
 
-/// Creates a new singly-linked list
-node* createLL(int c) {
-    return createNullNode(c);
-}
+/// Creates a blank singly-linked list
+//node* blank_list() {
+//    return NULL;
+//}
 
 /// Creates a new node, pointing to NULL
-node* createNullNode(int c) {
-  node *n = (node*) malloc(sizeof(node));
+node* create_node(int c) {
+  node *n = malloc(sizeof(node));
   n->c = c;
   n->next = NULL;
   return n;
 }
 
 /// Prints a singly-linked list
-void printLL(node* head) {
+void print_list(node* head) {
   node* current = head;
     while (current != NULL) {
         printf("%c -> ", current->c);
@@ -36,17 +36,25 @@ void printLL(node* head) {
     printf("NULL\n");
 }
 
-/// Appends a new node to the end of a singly-linked list
-node* addToLL(node* head, int c) {
-    node* current = head;
+/// Adds a new node to the singly-linked list
+node* add_to_list(node** head, int c) {
+    // Empty List
+    if (*head == NULL) {
+        *head = create_node(c);
+        return *head;
+    }
+//    printf("HIT\n");
+
+    // Appending
+    node* current = *head;
     while (current->next)
         current = current->next;
-    current->next = createNullNode(c);
+    current->next = create_node(c);
     return current;
 }
 
 /// Removes a node from the end of a singly-linked list and returns its value
-int removeFromLL(node* head) {
+int remove_from_list(node* head) {
   int r = 0;
   if (head == NULL) return 0;
   // If one node long
@@ -69,7 +77,7 @@ int removeFromLL(node* head) {
 }
 
 /// Removes a node from the start of a singly-linked list and returns its value
-int popFromLL(node** head) {
+int pop_from_list(node** head) {
   node* removed = *head;
   int r = removed->c;
   node* newHead = removed->next;
@@ -79,7 +87,7 @@ int popFromLL(node** head) {
 }
 
 /// Reverse a linked list
-void reverseLL(node** head) {
+void reverse_list(node** head) {
   node* previous = NULL;
   node* current = *head;
   node* next = NULL;
